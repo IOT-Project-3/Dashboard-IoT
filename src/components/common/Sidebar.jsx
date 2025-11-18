@@ -1,141 +1,31 @@
-import React from "react";
+import { Home, Users, Settings, Layers, FileText, User } from "lucide-react";
 import {
-    Sidebar,
-    SidebarContent,
-    SidebarGroup,
-    SidebarGroupLabel,
-    SidebarGroupContent,
-    SidebarMenu,
-    SidebarMenuItem,
-    SidebarMenuButton,
-    SidebarMenuSub,
-    SidebarMenuSubButton,
-    SidebarHeader,
-    SidebarFooter,
-    SidebarTrigger,
-    SidebarProvider,
-} from "@/components/ui/sidebar";
+    Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent,
+    SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
+} from "@/components/ui/sidebar"
 
-import { ChevronRight, User, Settings, Layers, FileText, Users } from "lucide-react";
+// ... (vos listes d'éléments navItems et settingItems) ...
 
 export function AppSidebar() {
     return (
         <Sidebar>
-            <SidebarHeader />
+            <SidebarHeader>
+                <h1 className="text-lg font-bold">Mon Tableau de Bord</h1>
+            </SidebarHeader>
+
             <SidebarContent>
-                {/* Tableau de bord */}
-                <SidebarGroup>
-                    <SidebarGroupLabel>Tableau de bord</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild>
-                                    <a href="#">
-                                        <ChevronRight />
-                                        <span>Tout voir</span>
-                                    </a>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild>
-                                    <a href="#">
-                                        <ChevronRight />
-                                        <span>Gestion de l'aire</span>
-                                    </a>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild>
-                                    <a href="#">
-                                        <ChevronRight />
-                                        <span>Zone inondable</span>
-                                    </a>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild>
-                                    <a href="#">
-                                        <ChevronRight />
-                                        <span>Savon</span>
-                                    </a>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
-
-                {/* Utilisateurs */}
-                <SidebarGroup>
-                    <SidebarGroupLabel>Utilisateurs</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild>
-                                    <a href="#">
-                                        <ChevronRight />
-                                        <span>Liste des utilisateurs</span>
-                                    </a>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild>
-                                    <a href="#">
-                                        <ChevronRight />
-                                        <span>Création de compte</span>
-                                    </a>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild>
-                                    <a href="#">
-                                        <ChevronRight />
-                                        <span>Gestion des permissions</span>
-                                    </a>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
-
-                {/* Paramètres */}
-                <SidebarGroup>
-                    <SidebarGroupLabel>Paramètres</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild>
-                                    <a href="#">
-                                        <User />
-                                        <span>Nom utilisateur</span>
-                                    </a>
-                                </SidebarMenuButton>
-                                <SidebarMenuSub>
-                                    <SidebarMenuSubButton asChild>
-                                        <a href="#">
-                                            <ChevronRight />
-                                            <span>Détails du compte</span>
-                                        </a>
-                                    </SidebarMenuSubButton>
-                                </SidebarMenuSub>
-                            </SidebarMenuItem>
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
+                {/* Groupe de navigation principal avec vos liens */}
             </SidebarContent>
-            <SidebarFooter />
+
+            <SidebarFooter>
+                {/* Info utilisateur */}
+                <div className="flex items-center space-x-2 p-2">
+                    <User className="h-5 w-5" />
+                    <span className="truncate">Utilisateur Connecté</span>
+                </div>
+            </SidebarFooter>
         </Sidebar>
     );
 }
 
-// Dans ton layout principal
-export default function Layout({ children }) {
-    return (
-        <SidebarProvider>
-            <AppSidebar />
-            <main>
-                <SidebarTrigger />
-                {children}
-            </main>
-        </SidebarProvider>
-    );
-}
+// ⚠️ Note : Ce fichier NE DOIT PAS contenir de composant Layout ou de SidebarProvider.
