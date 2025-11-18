@@ -9,6 +9,12 @@ import GestionAire from "./pages/GestionAire"
 import Savon from "./pages/Savon"
 import ToutVoir from "./pages/ToutVoir.jsx"
 import ZoneInondable from "./pages/ZoneInondable"
+import CreationsCompte from "@/pages/admin/CreationsCompte.jsx";
+import Account from "@/pages/Account.jsx";
+import Users from "@/pages/admin/Users.jsx";
+import DetailsAccount from "@/pages/DetailsAccount.jsx";
+import GestionPermissions from "@/pages/admin/GestionPermissions.jsx";
+
 
 // Explication :
 // On différencie les routes avec et sans sidebar
@@ -39,6 +45,11 @@ const router = createBrowserRouter([
             { path: "/gestion-aire", element: <GestionAire /> },
             { path: "/savon", element: <Savon /> },
             { path: "/zone-inondable", element: <ZoneInondable /> },
+            { path: "/account", element: <Account />},
+            { path: "/account/details", element: <DetailsAccount />},
+            { path: "/admin/users", element: <Users />},
+            { path: "/admin/create-account", element: <CreationsCompte />},
+            { path: "/admin/permissions", element: <GestionPermissions />},
         ],
     },
 
