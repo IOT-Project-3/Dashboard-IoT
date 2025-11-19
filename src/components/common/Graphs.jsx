@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TrendingUp } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
@@ -17,168 +17,251 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-function Graphs() {
-  const chartData = [
-    { month: "January", visites: 186, vent: 20 },
-    { month: "February", visites: 305, vent: 20 },
-    { month: "March", visites: 237, vent: 20 },
-    { month: "April", visites: 73, vent: 20 },
-    { month: "May", visites: 209, vent: 20 },
-    { month: "June", visites: 214, vent: 20 },
-  ];
-  const [trends, setTrends] = React.useState(null);
-  const [chartConfig, setChartConfig] = React.useState(null);
-  const [params, setParams] = React.useState(null);
-  const [yAxis, setYAxis] = React.useState(null);
+function Graphs({ chartData }) {
+  const [trends, setTrends] = useState(null);
+  const [chartConfig, setChartConfig] = useState(null);
+  const [params, setParams] = useState(null);
+  const [yAxisConfigs, setYAxisConfigs] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   function getTrendAndPercentage(tocheck) {
     const len = chartData.length - 1;
-    const percentage =
-      (chartData[len][tocheck] / chartData[len - 1][tocheck]) * 100;
+    const percentage = (
+      (chartData[len][tocheck] / chartData[len - 1][tocheck]) * 100 -
+      100
+    ).toFixed(2);
     const trend = percentage > 0 ? "up" : "down";
-    if (trends === null) {
-      let Trends = {};
-      Trends[tocheck] = {
-        trend: trend,
-        percentage: percentage,
-      };
-      setTrends(Trends);
-    } else {
-      let Trends = { ...trends };
-      Trends[tocheck] = { trend: trend, percentage: percentage };
-      setTrends(Trends);
-    }
+    return { trend: trend, percentage: percentage };
   }
 
-  function getYAxis(param) {
+  function getBiggestUnit(value) {
+    if (value === 0) return 1;
+
+    const absValue = Math.abs(value);
+    let unit = 1;
+
+    // Trouver la plus grande puissance de 10
+    while (unit * 10 <= absValue) {
+      unit *= 10;
+    }
+
+    return unit;
+  }
+
+  function generateYAxisConfig(param) {
     let max = chartData[0][param];
-    let mini = chartData[0][param];
-    for (let i = 1; i < chartData.length; i++) {
-      if (chartData[i][param] < mini) {
-        mini = chartData[i][param];
+    let min = chartData[0][param];
+
+    // Trouver min et max
+    for (let i = 0; i < chartData.length; i++) {
+      if (chartData[i][param] < min) {
+        min = chartData[i][param];
       }
       if (chartData[i][param] > max) {
         max = chartData[i][param];
       }
     }
 
-    let nbDivPar10Max = 0;
-    let nbDivPar10Mini = 0;
-    if (mini > 0) {
-      while (mini >= 1) {
-        mini /= 10;
-        nbDivPar10Mini++;
-      }
-      mini = mini * 10 ** nbDivPar10Mini;
-    } else if (mini < 0) {
-      while (mini <= 1) {
-        mini /= 10;
-        nbDivPar10Mini++;
-      }
-      mini = mini * 10 ** nbDivPar10Mini;
+    // Déterminer la plus grande unité basée sur la valeur maximale
+    const biggestUnit = getBiggestUnit(max);
+
+    // Arrondir min et max aux multiples de la plus grande unité
+    let roundedMin = Math.floor(min / biggestUnit) * biggestUnit;
+    let roundedMax = Math.ceil(max / biggestUnit) * biggestUnit;
+
+    roundedMin = roundedMin > 0 ? 0 : roundedMin;
+    roundedMax =
+      roundedMax % biggestUnit === 0 ? roundedMax + biggestUnit : roundedMax;
+
+    // Générer les ticks (valeurs sur l'axe Y)
+    const ticks = [];
+    for (let i = roundedMin; i <= roundedMax; i += biggestUnit) {
+      ticks.push(i);
     }
 
-    if (max > 0) {
-      while (max >= 1) {
-        max /= 10;
-        nbDivPar10Max++;
-      }
-      max = max * 10 ** nbDivPar10Max;
-    } else if (max < 0) {
-      while (max <= 1) {
-        max /= 10;
-        nbDivPar10Max++;
-      }
-
-      max = max * 10 ** nbDivPar10Max;
-    }
-  }
-
-  function generateDataAxis(dataMini, dataMaxi) {
-    let dataAxis = [];
-    for (let i = dataMini; i <= dataMaxi; i += 10) {
-      dataAxis.push(i);
-    }
-    return dataAxis;
+    return {
+      domain: [roundedMin, roundedMax],
+      ticks: ticks,
+      unit: biggestUnit,
+    };
   }
 
   function generateConfig() {
     const keys = Object.keys(chartData[0]);
     let config = {};
-    let param = [];
-    let label = "";
+    let param = {
+      XAxis: keys[0],
+      datas: [],
+      amountOf: chartData.length,
+    };
+
     for (let i = 1; i < keys.length; i++) {
       let contentConfig = {};
-      label = keys[i];
+      const label = keys[i];
       contentConfig["label"] = label.charAt(0).toUpperCase() + label.slice(1);
-      contentConfig["color"] = "var(--chart-" + (i + 1) + ")";
+      contentConfig["color"] = `var(--chart-${i + 1})`;
       config[label] = contentConfig;
-      param.push(label);
-      getTrendAndPercentage(label);
+      param.datas.push(label);
     }
-    setChartConfig(config);
-    setParams(param);
+
+    return { config, param };
   }
 
-  if (chartConfig === null || params === null || trends === null) {
-    generateConfig();
-  } else {
-    return (
-      <Card className={"Card"}>
-        <CardHeader className={""}>
-          <CardTitle className={""}>Area Chart - Linear</CardTitle>
-          <CardDescription className={""}>
-            Showing total visitors for the last 6 months
-          </CardDescription>
-        </CardHeader>
-        <CardContent className={""}>
-          <ChartContainer config={chartConfig} className={"GraphContainer"}>
-            <AreaChart
-              accessibilityLayer
-              data={chartData}
-              margin={{
-                left: 12,
-                right: 12,
-              }}
-            >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="month"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-                tickFormatter={(value) => value.slice(0, 3)}
-              />
-              <YAxis tickLine={false} axisLine={false} />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="dot" hideLabel />}
-              />
-              {params.map((param) => (
-                <Area
-                  dataKey={param}
-                  type="linear"
-                  fill={"var(--color-" + param + ")"}
-                  fillOpacity={0.4}
-                  stroke={"var(--color-" + param + ")"}
-                />
-              ))}
-            </AreaChart>
-          </ChartContainer>
-        </CardContent>
-        <CardFooter className={""}>
-          <div className="flex w-full items-start gap-2 text-sm">
-            <div className="grid gap-2">
-              <div className="flex items-center gap-2 leading-none font-medium">
-                Trending up by 5.2% this month{" "}
-                <TrendingUp className="h-4 w-4" />
-              </div>
-            </div>
-          </div>
-        </CardFooter>
-      </Card>
-    );
+  function generateAxisTrend(paramList) {
+    let dataTrends = {};
+
+    for (let i = 0; i < paramList.length; i++) {
+      dataTrends[paramList[i]] = getTrendAndPercentage(paramList[i]);
+    }
+
+    return dataTrends;
   }
+
+  function generateAllYAxisConfigs(paramList) {
+    let configs = {};
+
+    for (let i = 0; i < paramList.length; i++) {
+      configs[paramList[i]] = generateYAxisConfig(paramList[i]);
+    }
+
+    return configs;
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      const { config, param } = generateConfig();
+      const trendsData = generateAxisTrend(param.datas);
+      const yConfigs = generateAllYAxisConfigs(param.datas);
+
+      setChartConfig(config);
+      setParams(param);
+      setTrends(trendsData);
+      setYAxisConfigs(yConfigs);
+      setIsLoading(false);
+    }
+    void fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <div>Chargement...</div>;
+  }
+
+  return (
+    <Card className="Card">
+      <CardHeader>
+        <CardTitle>Area Chart - Linear</CardTitle>
+        <CardDescription>
+          Showing total of {params.datas[0]}{" "}
+          {params.datas.length > 1 ? "and " + params.datas[1] : ""}{" "}
+          {" for the last " +
+            params.amountOf +
+            " " +
+            params.XAxis +
+            (params.amountOf > 1 ? "s" : "")}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig} className="GraphContainer">
+          <AreaChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey={params.XAxis}
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(value) => value.slice(0, 3)}
+            />
+            {params.datas.map((param, index) => {
+              const axisConfig = yAxisConfigs[param];
+              return (
+                <YAxis
+                  key={param}
+                  yAxisId={param}
+                  domain={axisConfig.domain}
+                  ticks={axisConfig.ticks}
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={10}
+                  orientation={index > 0 ? "right" : "left"}
+                />
+              );
+            })}
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent indicator="dot" hideLabel />}
+            />
+            {params.datas.map((param) => {
+              if (yAxisConfigs[param].domain[0] >= 0) {
+                return (
+                  <Area
+                    key={param}
+                    dataKey={param}
+                    yAxisId={param}
+                    type="linear"
+                    fill={`var(--color-${param})`}
+                    fillOpacity={0.4}
+                    stroke={`var(--color-${param})`}
+                  />
+                );
+              } else {
+                return (
+                  <Area
+                    key={param}
+                    dataKey={param}
+                    yAxisId={param}
+                    type="linear"
+                    fillOpacity={0}
+                    stroke={`var(--color-${param})`}
+                  />
+                );
+              }
+            })}
+          </AreaChart>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter>
+        <div className="flex w-full items-start gap-2 text-sm">
+          <div className="grid gap-2">
+            {params.datas.map((param, key) => {
+              if (trends[param].trend === "up") {
+                return (
+                  <div
+                    key={key}
+                    className="flex items-center gap-2 leading-none font-medium"
+                  >
+                    {chartConfig[param].label} : Trending up by{" "}
+                    {trends[param].percentage}%{" "}
+                    <TrendingUp className="h-4 w-4" />
+                  </div>
+                );
+              } else {
+                return (
+                  <div
+                    key={key}
+                    className="flex items-center gap-2 leading-none font-medium"
+                  >
+                    {chartConfig[param].label} : Trending down by{" "}
+                    {trends[param].percentage * -1}%{" "}
+                    <TrendingUp
+                      className="h-4 w-4"
+                      style={{ transform: "scaleY(-1)" }}
+                    />
+                  </div>
+                );
+              }
+            })}
+          </div>
+        </div>
+      </CardFooter>
+    </Card>
+  );
 }
 
 export default Graphs;
