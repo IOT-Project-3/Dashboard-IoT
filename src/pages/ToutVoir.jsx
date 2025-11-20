@@ -1,7 +1,11 @@
 import React from "react";
 
 function ToutVoir() {
-  return <></>;
+    return (
+        <>
+
+        </>
+    );
 }
 
 export default ToutVoir;

@@ -30,7 +30,7 @@ export function AppSidebar() {
                         <SidebarMenu>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <a href="#">
+                                    <a href="/">
                                         <ChevronRight />
                                         <span>Tout voir</span>
                                     </a>
@@ -38,7 +38,7 @@ export function AppSidebar() {
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <a href="#">
+                                    <a href="/gestion-aire">
                                         <ChevronRight />
                                         <span>Gestion de l'aire</span>
                                     </a>
@@ -46,7 +46,7 @@ export function AppSidebar() {
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <a href="#">
+                                    <a href="/zone-inondable">
                                         <ChevronRight />
                                         <span>Zone inondable</span>
                                     </a>
@@ -54,7 +54,7 @@ export function AppSidebar() {
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <a href="#">
+                                    <a href="/savon">
                                         <ChevronRight />
                                         <span>Savon</span>
                                     </a>
@@ -71,7 +71,7 @@ export function AppSidebar() {
                         <SidebarMenu>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <a href="#">
+                                    <a href="/admin/users">
                                         <ChevronRight />
                                         <span>Liste des utilisateurs</span>
                                     </a>
@@ -79,7 +79,7 @@ export function AppSidebar() {
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <a href="#">
+                                    <a href="/admin/create-account">
                                         <ChevronRight />
                                         <span>Création de compte</span>
                                     </a>
@@ -87,7 +87,7 @@ export function AppSidebar() {
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <a href="#">
+                                    <a href="/admin/permissions">
                                         <ChevronRight />
                                         <span>Gestion des permissions</span>
                                     </a>
@@ -104,14 +104,14 @@ export function AppSidebar() {
                         <SidebarMenu>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <a href="#">
+                                    <a href="/account">
                                         <User />
                                         <span>Nom utilisateur</span>
                                     </a>
                                 </SidebarMenuButton>
                                 <SidebarMenuSub>
                                     <SidebarMenuSubButton asChild>
-                                        <a href="#">
+                                        <a href="/account/details">
                                             <ChevronRight />
                                             <span>Détails du compte</span>
                                         </a>

@@ -1,13 +1,10 @@
-import { Outlet } from "react-router-dom";
-import Sidebar from "@/components/common/Sidebar";
+import { Outlet } from "react-router-dom"
+import {Sidebar} from "@/components/ui/sidebar.jsx";
 
-export default function PublicLayout() {
-  return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="p-6" style={{ minWidth: "900px" }}>
-        <Outlet />
-      </main>
-    </div>
-  );
+export default function DashboardLayout() {
+    return (
+        <div className="">
+            <Outlet />
+        </div>
+    )
 }
