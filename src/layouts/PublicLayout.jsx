@@ -1,9 +1,9 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom";
 
 export default function PublicLayout() {
-    return (
-        <div className="">
-            <Outlet />
-        </div>
-    )
+  return (
+    <div className="">
+      <Outlet />
+    </div>
+  );
 }
