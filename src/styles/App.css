@@ -40,3 +40,13 @@
 .read-the-docs {
   color: #888;
 }
+
+.GraphContainer {
+  min-height: 400px;
+  min-width: 80%;
+}
+
+.Card {
+  min-height: 600px;
+  min-width: 80%;
+}
