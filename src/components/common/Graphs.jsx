@@ -24,10 +24,6 @@ function Graphs({ chartData }) {
   const [yAxisConfigs, setYAxisConfigs] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  if (!chartData || !chartData[0] || Object.keys(chartData[0]).length < 1) {
-    return <div>No data</div>;
-  }
-
   function getTrendAndPercentage(tocheck) {
     const len = chartData.length - 1;
     const percentage = (
@@ -144,7 +140,11 @@ function Graphs({ chartData }) {
       setIsLoading(false);
     }
     void fetchData();
-  }, []);
+  });
+
+  if (!chartData || !chartData[0] || Object.keys(chartData[0]).length < 1) {
+    return <div>No data</div>;
+  }
 
   if (isLoading) {
     return <div>Chargement...</div>;
