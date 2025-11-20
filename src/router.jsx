@@ -15,6 +15,7 @@ import Users from "@/pages/Users.jsx";
 import DetailsAccount from "@/pages/DetailsAccount.jsx";
 import GestionPermissions from "@/pages/GestionPermissions.jsx";
 import ForgotPassword from "@/pages/ForgotPassword.jsx";
+import Parametre from "@/pages/Parametre.jsx";
 
 // Explication :
 // On différencie les routes avec et sans sidebar
@@ -46,11 +47,12 @@ const router = createBrowserRouter([
       { path: "/gestion-de-l-aire", element: <GestionAire /> },
       { path: "/savon", element: <Savon /> },
       { path: "/zone-inondable", element: <ZoneInondable /> },
-      { path: "/account", element: <Account /> },
-      { path: "/account/details", element: <DetailsAccount /> },
-      { path: "/admin/users", element: <Users /> },
-      { path: "/admin/create-account", element: <CreationsCompte /> },
-      { path: "/admin/permissions", element: <GestionPermissions /> },
+      { path: "/mon-compte", element: <Account /> },
+      { path: "/mon-compte/parametre", element: <DetailsAccount /> },
+      { path: "/parametre", element: <Parametre /> },
+      { path: "/liste-utilisateurs", element: <Users /> },
+      { path: "/creation-de-compte", element: <CreationsCompte /> },
+      { path: "/gestion-permissions", element: <GestionPermissions /> },
     ],
   },
 ]);

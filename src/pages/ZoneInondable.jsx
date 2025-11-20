@@ -18,11 +18,6 @@ const cards = [
     titre: "État global",
     texte: "Critique",
   },
-  {
-    icone: Home,
-    titre: "Batterie du capteur",
-    texte: "72%",
-  },
 ];
 
 function ZoneInondable() {

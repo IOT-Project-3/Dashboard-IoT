@@ -63,12 +63,20 @@ const items_utilisateurs = [
 const menu2 = [
   {
     title: "Paramètres",
-    url: "/parametres",
+    url: "/parametre",
     icon: Settings,
   },
 ];
 
 const user_dropdown = [
+  {
+    title: "Mon compte",
+    url: "/mon-compte",
+  },
+  {
+    title: "Paramètre",
+    url: "/mon-compte/parametre",
+  },
   {
     title: "Déconnexion",
     url: "/deconnexion",
@@ -81,15 +89,14 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>IoT - Dashboard</SidebarGroupLabel>
-
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/">
+                  <div className="cursor-default">
                     <Home />
                     <span>Tableau de bord</span>
-                  </a>
+                  </div>
                 </SidebarMenuButton>
 
                 <SidebarMenuSub>
@@ -108,10 +115,10 @@ export function AppSidebar() {
 
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/">
+                  <div className="cursor-default">
                     <User2 />
                     <span>Utilisateurs</span>
-                  </a>
+                  </div>
                 </SidebarMenuButton>
 
                 <SidebarMenuSub>
