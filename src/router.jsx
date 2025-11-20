@@ -9,11 +9,12 @@ import GestionAire from "./pages/GestionAire"
 import Savon from "./pages/Savon"
 import ToutVoir from "./pages/ToutVoir.jsx"
 import ZoneInondable from "./pages/ZoneInondable"
-import CreationsCompte from "@/pages/admin/CreationsCompte.jsx";
+import CreationsCompte from "@/pages/CreationsCompte.jsx";
 import Account from "@/pages/Account.jsx";
-import Users from "@/pages/admin/Users.jsx";
+import Users from "@/pages/Users.jsx";
 import DetailsAccount from "@/pages/DetailsAccount.jsx";
-import GestionPermissions from "@/pages/admin/GestionPermissions.jsx";
+import GestionPermissions from "@/pages/GestionPermissions.jsx";
+import ForgotPassword from "@/pages/ForgotPassword.jsx";
 
 
 // Explication :
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
         children: [
             { path: "/connexion", element: <Login /> },
             { path: "/decouverte", element: <Decouverte /> },
+            { path: "/mot-de-passe-oublie", element: <ForgotPassword />},
         ],
     },
 
