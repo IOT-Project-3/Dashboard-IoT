@@ -19,8 +19,6 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 
-import {Button} from "@/components/ui/button.jsx"
-
 import { Separator } from "@/components/ui/separator.jsx"
 
 const items_tableau_de_bord = [
