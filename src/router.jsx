@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       { path: "/", element: <ToutVoir /> },
-      { path: "/gestion-aire", element: <GestionAire /> },
+      { path: "/gestion-de-l-aire", element: <GestionAire /> },
       { path: "/savon", element: <Savon /> },
       { path: "/zone-inondable", element: <ZoneInondable /> },
       { path: "/account", element: <Account /> },

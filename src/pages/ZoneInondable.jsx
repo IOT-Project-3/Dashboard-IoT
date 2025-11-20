@@ -1,31 +1,35 @@
 import React from "react";
-import { Button } from "@/components/ui/button.jsx";
-import InfoCard from "@/components/common/InfoCard.jsx";
+import { Home } from "lucide-react";
+import CardsList from "@/components/common/CardsList.jsx";
+
+const cards = [
+  {
+    icone: Home,
+    titre: "Dernière mesure",
+    texte: "4,18m",
+  },
+  {
+    icone: Home,
+    titre: "Date et heure de la mesure",
+    texte: "20/10/2025 14:27",
+  },
+  {
+    icone: Home,
+    titre: "État global",
+    texte: "Critique",
+  },
+  {
+    icone: Home,
+    titre: "Batterie du capteur",
+    texte: "72%",
+  },
+];
 
 function ZoneInondable() {
   return (
-    <div>
-      <header>
-        <div>
-          <h2>Aire de Chaumont - Zone inondable</h2>
-          <p>Monitoring en temps réel</p>
-        </div>
-        <div>
-          <Button>Notifier par e-mail</Button>
-        </div>
-      </header>
-      <main>
-        <section className="flex flex-row gap-3">
-          <InfoCard title="Dernière mesure" data="4.18m" />
-          <InfoCard
-            title="Date et heure de la mesure"
-            data="20/10/2025 14:27"
-          />
-          <InfoCard title="État global" data="Critique" />
-        </section>
-        <section>{/*Graph*/}</section>
-      </main>
-    </div>
+    <>
+      <CardsList cards={cards} />
+    </>
   );
 }
 
