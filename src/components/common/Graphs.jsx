@@ -198,7 +198,10 @@ function Graphs({ chartData }) {
               content={<ChartTooltipContent indicator="dot" hideLabel />}
             />
             {params.datas.map((param) => {
-              if (yAxisConfigs[param].domain[0] >= 0) {
+              if (
+                yAxisConfigs[param].domain[0] >= 0 &&
+                params.datas.length === 1
+              ) {
                 return (
                   <Area
                     key={param}
