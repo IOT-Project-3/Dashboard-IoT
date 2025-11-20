@@ -1,6 +1,7 @@
 import React from "react";
 import { Home } from "lucide-react";
 import CardsList from "@/components/common/CardsList.jsx";
+import Graphs from "@/components/common/Graphs.jsx";
 
 const cards = [
   {
@@ -27,9 +28,20 @@ const cards = [
 
 function ZoneInondable() {
   return (
-    <>
+    <div className="gap-4 flex flex-col">
       <CardsList cards={cards} />
-    </>
+
+      <Graphs chartData={[
+        { month: "January", visites: 186, wind: 70 },
+        { month: "February", visites: 305, wind: 50 },
+        { month: "March", visites: 237, wind: 20 },
+        { month: "April", visites: 73, wind: 60 },
+        { month: "May", visites: 209, wind: 20 },
+        { month: "June", visites: 214, wind: 10 },
+      ]}
+      />
+
+    </div>
   );
 }
 
