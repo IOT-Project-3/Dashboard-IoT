@@ -1,6 +1,8 @@
 import React from "react";
 import CardsList from "@/components/common/CardsList.jsx";
 import { Home } from "lucide-react";
+import PageTitle from "../components/common/PageTitle";
+
 
 const cards = [
   {
@@ -18,16 +20,13 @@ const cards = [
     titre: "État global",
     texte: "Critique",
   },
-  {
-    icone: Home,
-    titre: "Batterie du capteur",
-    texte: "72%",
-  },
 ];
 
 function GestionAire() {
   return (
       <>
+
+        <PageTitle>Gestion de l'aire</PageTitle>
 
         <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">
           <CardsList cards={cards} />

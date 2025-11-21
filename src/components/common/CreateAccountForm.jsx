@@ -1,7 +1,6 @@
 "use client"
-import {
-  useState
-} from "react"
+// Je l'ai fait avec https://www.shadcn-form.com/playground
+
 import {
   toast
 } from "sonner"
@@ -74,7 +73,7 @@ export default function CreateAccountForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl">
         
         <FormField
           control={form.control}

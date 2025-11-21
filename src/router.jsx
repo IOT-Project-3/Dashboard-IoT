@@ -15,6 +15,7 @@ import Users from "@/pages/Users.jsx";
 import DetailsAccount from "@/pages/DetailsAccount.jsx";
 import GestionPermissions from "@/pages/GestionPermissions.jsx";
 import ForgotPassword from "@/pages/ForgotPassword.jsx";
+import LandingPage from "@/pages/LandingPage.jsx";
 
 // Explication :
 // On différencie les routes avec et sans sidebar
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       { path: "/connexion", element: <Login /> },
       { path: "/decouverte", element: <Decouverte /> },
       { path: "/mot-de-passe-oublie", element: <ForgotPassword /> },
+      { path: "/chaumont", element: <LandingPage /> },
     ],
   },
 

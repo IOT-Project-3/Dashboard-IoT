@@ -1,9 +1,13 @@
 import React from "react";
 import CreateAccountForm from "../components/common/CreateAccountForm";
+import PageTitle from "../components/common/PageTitle";
 
 function CreationsCompte() {
   return (
-    <CreateAccountForm />
+    <>
+      <PageTitle>Création de compte</PageTitle>
+      <CreateAccountForm />
+    </>
   );
 }
 
