@@ -45,7 +45,7 @@ const items_tableau_de_bord = [
 const items_utilisateurs = [
   {
     title: "Liste des utilisateurs",
-    url: "/liste-utilisateurs",
+    url: "/liste-des-utilisateurs",
     icon: User2,
   },
   {

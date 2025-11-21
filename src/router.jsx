@@ -48,9 +48,9 @@ const router = createBrowserRouter([
       { path: "/zone-inondable", element: <ZoneInondable /> },
       { path: "/compte", element: <Account /> },
       { path: "/compte/details", element: <DetailsAccount /> },
-      { path: "/admin/utilisateurs", element: <Users /> },
-      { path: "/admin/creer-compte", element: <CreationsCompte /> },
-      { path: "/admin/permissions", element: <GestionPermissions /> },
+      { path: "/liste-des-utilisateurs", element: <Users /> },
+      { path: "/creer-compte", element: <CreationsCompte /> },
+      { path: "/permissions", element: <GestionPermissions /> },
     ],
   },
 ]);

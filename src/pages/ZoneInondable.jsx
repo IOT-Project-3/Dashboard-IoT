@@ -29,7 +29,9 @@ const cards = [
 function ZoneInondable() {
   return (
     <div className="gap-4 flex flex-col">
-      <CardsList cards={cards} />
+      <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">
+        <CardsList cards={cards} />
+      </div>
 
       <Graphs chartData={[
         { month: "January", visites: 186, wind: 70 },

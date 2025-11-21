@@ -26,7 +26,15 @@ const cards = [
 ];
 
 function GestionAire() {
-  return <CardsList cards={cards} />;
+  return (
+      <>
+
+        <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">
+          <CardsList cards={cards} />
+        </div>
+
+      </>
+  )
 }
 
 export default GestionAire;
