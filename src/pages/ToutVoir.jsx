@@ -1,5 +1,4 @@
 import React from "react";
-import GestionPermissions from "@/pages/GestionPermissions.jsx";
 
 function ToutVoir() {
   return (
