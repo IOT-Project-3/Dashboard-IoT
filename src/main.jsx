@@ -8,7 +8,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   //<AuthProvider>
 
   <React.StrictMode>
-    <RouterProvider router={router} />,
+    <RouterProvider router={router} />
   </React.StrictMode>,
 
   //</AuthProvider>

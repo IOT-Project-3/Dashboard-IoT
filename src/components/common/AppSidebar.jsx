@@ -45,12 +45,12 @@ const items_tableau_de_bord = [
 const items_utilisateurs = [
   {
     title: "Liste des utilisateurs",
-    url: "/liste-utilisateurs",
+    url: "/admin/users",
     icon: User2,
   },
   {
     title: "Création de compte",
-    url: "/creation-de-compte",
+    url: "/admin/create-account",
     icon: User2,
   },
   {

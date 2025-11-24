@@ -2,7 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { TrendingUp } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ReferenceLine,
+  XAxis,
+  YAxis,
+} from "recharts";
 import {
   Card,
   CardContent,
@@ -17,7 +24,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-function Graphs({ chartData }) {
+function Graphs({ chartData, line = null }) {
   const [trends, setTrends] = useState(null);
   const [chartConfig, setChartConfig] = useState(null);
   const [params, setParams] = useState(null);
@@ -133,14 +140,14 @@ function Graphs({ chartData }) {
       const trendsData = generateAxisTrend(param.datas);
       const yConfigs = generateAllYAxisConfigs(param.datas);
 
-      setChartConfig(config);
-      setParams(param);
-      setTrends(trendsData);
-      setYAxisConfigs(yConfigs);
-      setIsLoading(false);
+      await setChartConfig(config);
+      await setParams(param);
+      await setTrends(trendsData);
+      await setYAxisConfigs(yConfigs);
+      await setIsLoading(false);
     }
     void fetchData();
-  });
+  }, [chartData]);
 
   if (!chartData || !chartData[0] || Object.keys(chartData[0]).length < 1) {
     return <div>No data</div>;
@@ -153,15 +160,18 @@ function Graphs({ chartData }) {
   return (
     <Card className="Card">
       <CardHeader>
-        <CardTitle>Area Chart - Linear</CardTitle>
+        <CardTitle>Menu déroulant pour le temps</CardTitle>
         <CardDescription>
-          Showing total of {params.datas[0]}{" "}
-          {params.datas.length > 1 ? "and " + params.datas[1] : ""}{" "}
-          {" for the last " +
+          Montre : {params.datas[0]}{" "}
+          {params.datas.length > 1 ? "et " + params.datas[1] : ""}{" "}
+          {" au cours des " +
             params.amountOf +
-            " " +
+            " derniers " +
             params.XAxis +
-            (params.amountOf > 1 ? "s" : "")}
+            (params.amountOf > 1 &&
+            params.XAxis.substring(params.XAxis.length - 1) !== "s"
+              ? "s"
+              : "")}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -197,6 +207,16 @@ function Graphs({ chartData }) {
                 />
               );
             })}
+            {line !== null ? (
+              <ReferenceLine
+                yAxisId={params.datas[0]}
+                y={line}
+                stroke="red"
+                strokeDasharray="5 0"
+              />
+            ) : (
+              ""
+            )}
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dot" hideLabel />}
