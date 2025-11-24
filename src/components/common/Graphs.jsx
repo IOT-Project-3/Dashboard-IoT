@@ -203,7 +203,6 @@ function Graphs({ chartData, line = null }) {
 
   function getTrendAndPercentage(tocheck) {
     let len = ChartData.length - 1;
-    console.log(ChartData[len][tocheck]);
     while (ChartData[len][tocheck] === ChartData[len - 1][tocheck]) {
       len -= 1;
     }
@@ -403,7 +402,6 @@ function Graphs({ chartData, line = null }) {
                   <DropdownMenuGroup>
                     {currentSelection[1].map((key) => {
                       if ("Année" === currentSelection[0]) {
-                        console.log(currentSelection, key);
                         if (parseInt(currentSelection[2]) !== parseInt(key)) {
                           return (
                             <DropdownMenuItem
@@ -417,7 +415,6 @@ function Graphs({ chartData, line = null }) {
                           );
                         }
                       } else if ("Mois" === currentSelection[0]) {
-                        console.log(currentSelection);
                         return (
                           <div>
                             <DropdownMenuLabel key={key}>
@@ -425,7 +422,6 @@ function Graphs({ chartData, line = null }) {
                             </DropdownMenuLabel>
                             <DropdownMenuGroup>
                               {currentSelection[2][key].map((mois) => {
-                                console.log(currentSelection);
                                 if (
                                   parseInt(currentSelection[3]) ===
                                     parseInt(key) &&
