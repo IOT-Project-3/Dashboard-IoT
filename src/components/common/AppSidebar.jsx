@@ -55,7 +55,7 @@ const items_utilisateurs = [
   },
   {
     title: "Gestion des permissions",
-    url: "/gestion-permissions",
+    url: "/admin/permissions",
     icon: User2,
   },
 ];
