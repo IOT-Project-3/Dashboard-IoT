@@ -39,9 +39,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button.jsx";
 import { NumToMois } from "@/functions/GestionnaireDates.jsx";
+import DropDownTempGraph from "@/components/common/DropDownTempGraph.jsx";
+import DropDown2Selector from "@/components/common/DropDown2Selector.jsx";
 
-function Graphs({ chartData, line = null }) {
-  const [ChartData, setChartData] = useState(chartData);
+function Graphs({ line = null }) {
+  const [ChartData, setChartData] = useState(null);
   const [trends, setTrends] = useState(null);
   const [chartConfig, setChartConfig] = useState(null);
   const [params, setParams] = useState(null);
@@ -166,7 +168,7 @@ function Graphs({ chartData, line = null }) {
       ],
     },
   });
-  const [currentSelection, setCurrentSelection] = useState(null);
+  const [currentSelection, setCurrentSelection] = useState("Aujourd'hui");
 
   async function getDataFromHardData(key, annee = null, mois = null) {
     let tempDatas = null;
@@ -309,6 +311,9 @@ function Graphs({ chartData, line = null }) {
 
   useEffect(() => {
     async function fetchData() {
+      if (ChartData === null) {
+        await getDataFromHardData("Aujourd'hui");
+      }
       const { config, param } = generateConfig();
       const trendsData = generateAxisTrend(param.datas);
       const yConfigs = generateAllYAxisConfigs(param.datas);
@@ -322,6 +327,8 @@ function Graphs({ chartData, line = null }) {
     void fetchData();
   }, [ChartData]);
 
+  console.log(currentSelection);
+
   if (!ChartData || !ChartData[0] || Object.keys(ChartData[0]).length < 1) {
     return <div>No data</div>;
   }
@@ -334,38 +341,15 @@ function Graphs({ chartData, line = null }) {
     <Card className="Card">
       <CardHeader>
         <CardTitle className={"flex flex-row-reverse"}>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                type="button"
-                className={
-                  "h-9 px-4 py-2 has-[>svg]:px-3 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
-                }
-              >
-                {currentSelection !== null
-                  ? typeof currentSelection === "object"
-                    ? currentSelection[0]
-                    : currentSelection
-                  : "Ouvrir"}
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="start">
-              <DropdownMenuGroup>
-                {Object.keys(hardData).map((key) => {
-                  if (key !== currentSelection) {
-                    return (
-                      <DropdownMenuItem
-                        onClick={async () => getDataFromHardData(key)}
-                        key={key}
-                      >
-                        {key}
-                      </DropdownMenuItem>
-                    );
-                  }
-                })}
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <DropDownTempGraph
+            nomSelection={
+              typeof currentSelection === "object"
+                ? currentSelection[0]
+                : currentSelection
+            }
+            data={hardData}
+            getDataFromHardData={getDataFromHardData}
+          />
         </CardTitle>
         <CardDescription className={"flex justify-between"}>
           <div>
@@ -381,85 +365,14 @@ function Graphs({ chartData, line = null }) {
                 : "")}
           </div>
           <div>
-            {currentSelection === null || currentSelection === "Aujourd'hui" ? (
-              ""
+            {typeof currentSelection === "object" ? (
+              <DropDown2Selector
+                nom={currentSelection[0]}
+                data={currentSelection.slice(1)}
+                getDataFromHardData={getDataFromHardData}
+              />
             ) : (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button
-                    type="button"
-                    className={
-                      "h-9 px-4 py-2 has-[>svg]:px-3 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
-                    }
-                  >
-                    {currentSelection[0] === "Année" ? currentSelection[2] : ""}
-                    {currentSelection[0] === "Mois"
-                      ? currentSelection[4] + " - " + currentSelection[3]
-                      : ""}
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="start">
-                  <DropdownMenuGroup key={"Group"}>
-                    {currentSelection[1].map((key) => {
-                      if ("Année" === currentSelection[0]) {
-                        if (parseInt(currentSelection[2]) !== parseInt(key)) {
-                          return (
-                            <DropdownMenuItem
-                              onClick={async () =>
-                                getDataFromHardData(currentSelection[0], key)
-                              }
-                              key={key}
-                            >
-                              {key}
-                            </DropdownMenuItem>
-                          );
-                        }
-                      } else if ("Mois" === currentSelection[0]) {
-                        return (
-                          <div key={key + "-div"}>
-                            <DropdownMenuLabel key={key + "-label"}>
-                              {key}
-                            </DropdownMenuLabel>
-                            <DropdownMenuGroup key={key + "-group"}>
-                              {currentSelection[2][key].map((mois) => {
-                                if (
-                                  parseInt(currentSelection[3]) ===
-                                    parseInt(key) &&
-                                  currentSelection[4] === mois
-                                ) {
-                                  return "";
-                                } else {
-                                  return (
-                                    <DropdownMenuItem
-                                      onClick={async () =>
-                                        getDataFromHardData(
-                                          currentSelection[0],
-                                          key,
-                                          mois,
-                                        )
-                                      }
-                                      key={key + "-" + mois}
-                                    >
-                                      {mois}
-                                    </DropdownMenuItem>
-                                  );
-                                }
-                              })}
-                            </DropdownMenuGroup>
-                            {currentSelection[1][
-                              currentSelection[1].length - 1
-                            ] !== key ? (
-                              <DropdownMenuSeparator />
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        );
-                      }
-                    })}
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              ""
             )}
           </div>
         </CardDescription>
