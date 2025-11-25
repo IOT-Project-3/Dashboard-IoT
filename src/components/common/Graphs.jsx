@@ -399,7 +399,7 @@ function Graphs({ chartData, line = null }) {
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="start">
-                  <DropdownMenuGroup>
+                  <DropdownMenuGroup key={"Group"}>
                     {currentSelection[1].map((key) => {
                       if ("Année" === currentSelection[0]) {
                         if (parseInt(currentSelection[2]) !== parseInt(key)) {
@@ -416,11 +416,11 @@ function Graphs({ chartData, line = null }) {
                         }
                       } else if ("Mois" === currentSelection[0]) {
                         return (
-                          <div>
-                            <DropdownMenuLabel key={key}>
+                          <div key={key + "-div"}>
+                            <DropdownMenuLabel key={key + "-label"}>
                               {key}
                             </DropdownMenuLabel>
-                            <DropdownMenuGroup>
+                            <DropdownMenuGroup key={key + "-group"}>
                               {currentSelection[2][key].map((mois) => {
                                 if (
                                   parseInt(currentSelection[3]) ===
