@@ -22,7 +22,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Separator } from "@/components/ui/separator.jsx";
 import { useAuth } from "@/context/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 
