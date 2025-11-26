@@ -22,7 +22,7 @@ function DropDownMoisGraph({ nom, data, getDataFromHardData }) {
           {data[3] + " - " + data[2]}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mr-16" align="start">
+      <DropdownMenuContent align="end">
         {data[0].map((key) => {
           return (
             <div key={key + "-div"}>

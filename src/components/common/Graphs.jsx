@@ -51,7 +51,7 @@ function Graphs({ line = null }) {
   const [isLoading, setIsLoading] = useState(true);
   const [hardData, setHardData] = useState({
     "Aujourd'hui": [
-      { heure: "05", féquentation: 1 },
+      { heure: "05", féquentation: 1.2 },
       { heure: "06", féquentation: 3 },
       { heure: "07", féquentation: 6 },
       { heure: "08", féquentation: 10 },
@@ -73,16 +73,16 @@ function Graphs({ line = null }) {
       année: {
         2024: {
           Décembre: [
-            { jour: "01", fréquentation: 92 },
-            { jour: "02", fréquentation: 108 },
-            { jour: "03", fréquentation: 86 },
-            { jour: "04", fréquentation: 78 },
-            { jour: "05", fréquentation: 80 },
-            { jour: "06", fréquentation: 50 },
-            { jour: "07", fréquentation: 42 },
-            { jour: "08", fréquentation: 55 },
-            { jour: "09", fréquentation: 56 },
-            { jour: "10", fréquentation: 76 },
+            { jour: "01", fréquentation: 92, vent: 20 },
+            { jour: "02", fréquentation: 108, vent: 20 },
+            { jour: "03", fréquentation: 86, vent: 20 },
+            { jour: "04", fréquentation: 78, vent: 20 },
+            { jour: "05", fréquentation: 80, vent: 20 },
+            { jour: "06", fréquentation: 50, vent: 20 },
+            { jour: "07", fréquentation: 42, vent: 20 },
+            { jour: "08", fréquentation: 55, vent: 20 },
+            { jour: "09", fréquentation: 56, vent: 20 },
+            { jour: "10", fréquentation: 76, vent: 20 },
           ],
         },
         2025: {
@@ -170,6 +170,14 @@ function Graphs({ line = null }) {
   });
   const [currentSelection, setCurrentSelection] = useState("Aujourd'hui");
 
+  // const dataAppel = {
+  //   date: { periode: "Année", mois: "01", annee: "2024" },
+  //   demandes: {
+  //     sondes: ["haut", "device_id"],
+  //     toilettes: ["frequence"],
+  //   },
+  // };
+
   async function getDataFromHardData(key, annee = null, mois = null) {
     let tempDatas = null;
     const date = new Date();
@@ -205,7 +213,10 @@ function Graphs({ line = null }) {
 
   function getTrendAndPercentage(tocheck) {
     let len = ChartData.length - 1;
-    while (ChartData[len][tocheck] === ChartData[len - 1][tocheck]) {
+    while (
+      ChartData[len][tocheck] === ChartData[len - 1][tocheck] &&
+      ChartData[len - 1][tocheck] === 0
+    ) {
       len -= 1;
     }
     const percentage = (
@@ -327,8 +338,6 @@ function Graphs({ line = null }) {
     void fetchData();
   }, [ChartData]);
 
-  console.log(currentSelection);
-
   if (!ChartData || !ChartData[0] || Object.keys(ChartData[0]).length < 1) {
     return <div>No data</div>;
   }
@@ -402,24 +411,22 @@ function Graphs({ line = null }) {
                   key={param}
                   yAxisId={param}
                   domain={axisConfig.domain}
+                  allowDecimals={true}
                   ticks={axisConfig.ticks}
-                  tickLine={false}
-                  axisLine={false}
+                  tickLine={true}
+                  axisLine={true}
                   tickMargin={10}
-                  orientation={index > 0 ? "right" : "left"}
+                  orientation={index % 2 === 1 ? "right" : "left"}
+                  label={{
+                    value: chartConfig[param].label,
+                    angle: -90,
+                    position: "insideLeft",
+                    offset: 20,
+                    style: { textAnchor: "middle" },
+                  }}
                 />
               );
             })}
-            {line !== null ? (
-              <ReferenceLine
-                yAxisId={params.datas[0]}
-                y={line}
-                stroke="red"
-                strokeDasharray="5 0"
-              />
-            ) : (
-              ""
-            )}
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dot" hideLabel />}
@@ -453,6 +460,16 @@ function Graphs({ line = null }) {
                 );
               }
             })}
+            {line !== null ? (
+              <ReferenceLine
+                yAxisId={params.datas[0]}
+                y={line}
+                stroke="red"
+                strokeDasharray="5 0"
+              />
+            ) : (
+              ""
+            )}
           </AreaChart>
         </ChartContainer>
       </CardContent>

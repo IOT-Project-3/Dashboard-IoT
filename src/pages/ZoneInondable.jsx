@@ -2,6 +2,7 @@ import React from "react";
 import { Home } from "lucide-react";
 import CardsList from "@/components/common/CardsList.jsx";
 import Graphs from "@/components/common/Graphs.jsx";
+import GraphRadar from "@/components/common/GraphRadar.jsx";
 
 function ZoneInondable() {
   const cards = [
@@ -30,7 +31,10 @@ function ZoneInondable() {
   return (
     <div className="flex flex-col gap-4">
       <CardsList cards={cards} />
-      <Graphs line={120} />
+      <div className="grid grid-cols-3 gap-4">
+        <Graphs line={120} />
+        <GraphRadar />
+      </div>
     </div>
   );
 }

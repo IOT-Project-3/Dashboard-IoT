@@ -23,7 +23,7 @@ function DropDownAnneeGraph({ nom, data, getDataFromHardData }) {
           {currentSelected}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className={"mr-16"} align="start">
+      <DropdownMenuContent align="end">
         <DropdownMenuGroup key={"Group"}>
           {data[0].map((key) => {
             if (parseInt(currentSelected) !== parseInt(key)) {
