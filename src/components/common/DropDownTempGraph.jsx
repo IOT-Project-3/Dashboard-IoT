@@ -20,7 +20,7 @@ function DropDownTempGraph({ nomSelection, data, getDataFromHardData }) {
           {nomSelection ?? "Ouvrir"}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-fit mr-16" align="start">
+      <DropdownMenuContent className="w-fit" align="end">
         <DropdownMenuGroup>
           {Object.keys(data).map((key) => {
             if (key !== nomSelection) {
