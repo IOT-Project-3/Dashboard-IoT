@@ -4,30 +4,30 @@ import CardsList from "@/components/common/CardsList.jsx";
 import Graphs from "@/components/common/Graphs.jsx";
 import PageTitle from "../components/common/PageTitle";
 
-const cards = [
-  {
-    icone: Home,
-    titre: "Dernière mesure",
-    texte: "4,18m",
-  },
-  {
-    icone: Home,
-    titre: "Date et heure de la mesure",
-    texte: "20/10/2025 14:27",
-  },
-  {
-    icone: Home,
-    titre: "État global",
-    texte: "Critique",
-  },
-  {
-    icone: Home,
-    titre: "Batterie du capteur",
-    texte: "72%",
-  },
-];
-
 function ZoneInondable() {
+  const cards = [
+    {
+      icone: Home,
+      titre: "Dernière mesure",
+      texte: "4,18m",
+    },
+    {
+      icone: Home,
+      titre: "Date et heure de la mesure",
+      texte: "20/10/2025 14:27",
+    },
+    {
+      icone: Home,
+      titre: "État global",
+      texte: "Critique",
+    },
+    {
+      icone: Home,
+      titre: "Batterie du capteur",
+      texte: "72%",
+    },
+  ];
+
   return (
     <>
       {/* Nom de la page */}

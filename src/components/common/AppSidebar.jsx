@@ -22,12 +22,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Separator } from "@/components/ui/separator.jsx";
+import { useAuth } from "@/context/useAuth.jsx";
+import { useNavigate } from "react-router-dom";
 
 const items_tableau_de_bord = [
   {
     title: "Tout voir",
-    url: "/",
+    url: "/dashboard",
     icon: Home,
   },
   {
@@ -45,51 +46,62 @@ const items_tableau_de_bord = [
 const items_utilisateurs = [
   {
     title: "Liste des utilisateurs",
-    url: "/liste-des-utilisateurs",
+    url: "/admin/liste-utilisateurs",
     icon: User2,
   },
   {
     title: "Création de compte",
-    url: "/creer-compte",
+    url: "/admin/creer-compte",
     icon: User2,
   },
   {
     title: "Gestion des permissions",
-    url: "/gestion-permissions",
+    url: "/admin/permissions",
     icon: User2,
-  },
-];
-
-const menu2 = [
-  {
-    title: "Paramètres",
-    url: "/parametres",
-    icon: Settings,
   },
 ];
 
 const user_dropdown = [
   {
+    title: "Compte",
+    url: "/compte/",
+    icon: Settings,
+  },
+  {
+    title: "Paramètres du compte",
+    url: "/compte/details",
+    icon: Settings,
+  },
+  {
     title: "Déconnexion",
-    url: "/deconnexion",
+    url: "DECO",
   },
 ];
 
 export function AppSidebar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  console.log(user);
+
+  function deconnexion() {
+    logout();
+    navigate("/");
+  }
+
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>IoT - Dashboard</SidebarGroupLabel>
-
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/">
+                  <div>
                     <Home />
                     <span>Tableau de bord</span>
-                  </a>
+                  </div>
                 </SidebarMenuButton>
 
                 <SidebarMenuSub>
@@ -108,10 +120,10 @@ export function AppSidebar() {
 
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/">
+                  <div>
                     <User2 />
                     <span>Utilisateurs</span>
-                  </a>
+                  </div>
                 </SidebarMenuButton>
 
                 <SidebarMenuSub>
@@ -130,47 +142,40 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-
-        <Separator></Separator>
-
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {menu2.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
       </SidebarContent>
-
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <SidebarMenuButton asChild>
                 <DropdownMenuTrigger>
-                  <User2 /> Nom
+                  <User2 />
+                  <span className="ml-2">
+                    {" "}
+                    {user?.prenom} {user?.nom}{" "}
+                  </span>
                   <ChevronUp className="ml-auto" />
                 </DropdownMenuTrigger>
               </SidebarMenuButton>
-
               <DropdownMenuContent
                 side="top"
                 className="w-[--radix-popper-anchor-width]"
               >
-                {user_dropdown.map((item) => (
-                  <DropdownMenuItem key={item.title}>
-                    <a href={item.url}>{item.title}</a>
-                  </DropdownMenuItem>
-                ))}
+                {user_dropdown.map((item) => {
+                  if (item.url === "DECO") {
+                    return (
+                      <DropdownMenuItem key={item.title}>
+                        <p onClick={() => deconnexion()}>{item.title}</p>
+                      </DropdownMenuItem>
+                    );
+                  } else {
+                    return (
+                      <DropdownMenuItem key={item.title}>
+                        <a href={item.url}>{item.title}</a>
+                      </DropdownMenuItem>
+                    );
+                  }
+                })}
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>
