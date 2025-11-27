@@ -24,6 +24,7 @@ import Account from "@/pages/Account.jsx";
 import Users from "@/pages/Users.jsx";
 import DetailsAccount from "@/pages/DetailsAccount.jsx";
 import GestionPermissions from "@/pages/GestionPermissions.jsx";
+import LandingPage from "./pages/LandingPage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthProvider>
@@ -34,6 +35,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/connexion" element={<Login />} />
           <Route path="/" element={<Decouverte />} />
           <Route path="/mot-de-passe-oublie" element={<ForgotPassword />} />
+          <Route path="/chaumont" element={<LandingPage />} />
         </Route>
 
         {/* Privé */}
