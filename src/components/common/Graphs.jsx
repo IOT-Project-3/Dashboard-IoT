@@ -427,16 +427,6 @@ function Graphs({ line = null }) {
                 />
               );
             })}
-            {line !== null ? (
-              <ReferenceLine
-                yAxisId={params.datas[0]}
-                y={line}
-                stroke="red"
-                strokeDasharray="5 0"
-              />
-            ) : (
-              ""
-            )}
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dot" hideLabel />}
