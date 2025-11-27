@@ -9,23 +9,33 @@ import { Separator } from "@/components/ui/separator";
 
 export default function DashboardLayout() {
   let location = useLocation().pathname;
-  if (location.includes("admin")) {
-    location = location.split("/")[2];
-    if (location === "users") {
-      location = "Liste des utilisateurs";
-    } else if (location === "create-account") {
-      location = "Création d'un compte";
-    } else if (location === "permissions") {
-      location = "Gestion des permissions";
+  const correspondances = {
+    admin: {
+      // Routes /admin/
+      "liste-utilisateurs": "Liste des utilisateurs",
+      "creer-compte": "Création d'un compte",
+      permissions: "Gestion des permissions",
+    },
+    // Routes /compte/
+    compte: { base: "Votre compte", details: "Paramètres de votre compte" },
+    // Routes /
+    "zone-inondable": "Zone inondable",
+    "gestion-de-l-aire": "Gestion de l'aire",
+    dashboard: "Tout voir",
+    savon: "Paramètres des savons",
+  };
+
+  let tempLocation = location.split("/");
+  if (location.includes("compte")) {
+    if (!tempLocation[2]) {
+      tempLocation[2] = "base";
     }
+  }
+
+  if (tempLocation.length > 2) {
+    location = correspondances[tempLocation[1]][tempLocation[2]];
   } else {
-    if (location === "/") {
-      location = "Tout voir";
-    } else if (location === "/gestion-de-l-aire") {
-      location = "Gestion de l'aire";
-    } else if (location === "/zone-inondable") {
-      location = "Zone inondable";
-    }
+    location = correspondances[tempLocation[1]];
   }
   return (
     <SidebarProvider>
@@ -38,7 +48,7 @@ export default function DashboardLayout() {
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
-          <span className="font-semibold">Mon Application - {location}</span>
+          <span className="font-semibold">{location}</span>
         </header>
 
         <main className="flex-1 p-6">
