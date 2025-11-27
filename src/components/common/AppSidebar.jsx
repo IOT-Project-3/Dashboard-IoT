@@ -50,7 +50,7 @@ const items_utilisateurs = [
   },
   {
     title: "Création de compte",
-    url: "/creation-de-compte",
+    url: "/creer-compte",
     icon: User2,
   },
   {

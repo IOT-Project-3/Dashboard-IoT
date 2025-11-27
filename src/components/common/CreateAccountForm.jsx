@@ -1,24 +1,12 @@
-"use client"
+"use client";
 // Je l'ai fait avec https://www.shadcn-form.com/playground
 
-import {
-  toast
-} from "sonner"
-import {
-  useForm
-} from "react-hook-form"
-import {
-  zodResolver
-} from "@hookform/resolvers/zod"
-import {
-  z
-} from "zod"
-import {
-  cn
-} from "@/lib/utils"
-import {
-  Button
-} from "@/components/ui/button"
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -27,35 +15,32 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import {
-  Input
-} from "@/components/ui/input"
-import {
-  PasswordInput
-} from "@/components/ui/password-input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from "@/components/ui/select"
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   account_name: z.string().min(1),
   account_first_name: z.string().min(1),
   account_email: z.string(),
   account_password: z.string(),
-  account_role: z.string()
+  account_role: z.string(),
 });
 
 export default function CreateAccountForm() {
-
   const form = useForm({
     resolver: zodResolver(formSchema),
-
-  })
+    defaultValues: {
+      account_role: "user",
+    },
+  });
 
   function onSubmit(values) {
     try {
@@ -63,7 +48,7 @@ export default function CreateAccountForm() {
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
+        </pre>,
       );
     } catch (error) {
       console.error("Form submission error", error);
@@ -73,8 +58,10 @@ export default function CreateAccountForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl">
-        
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 max-w-3xl"
+      >
         <FormField
           control={form.control}
           name="account_name"
@@ -82,18 +69,14 @@ export default function CreateAccountForm() {
             <FormItem>
               <FormLabel>Nom</FormLabel>
               <FormControl>
-                <Input 
-                placeholder=""
-                
-                type="text"
-                {...field} />
+                <Input placeholder="" type="text" {...field} />
               </FormControl>
-              
+
               <FormMessage />
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="account_first_name"
@@ -101,18 +84,14 @@ export default function CreateAccountForm() {
             <FormItem>
               <FormLabel>Prénom</FormLabel>
               <FormControl>
-                <Input 
-                placeholder=""
-                
-                type="text"
-                {...field} />
+                <Input placeholder="" type="text" {...field} />
               </FormControl>
-              
+
               <FormMessage />
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="account_email"
@@ -120,18 +99,14 @@ export default function CreateAccountForm() {
             <FormItem>
               <FormLabel>Adresse e-mail</FormLabel>
               <FormControl>
-                <Input 
-                placeholder=""
-                
-                type="email"
-                {...field} />
+                <Input placeholder="" type="email" {...field} />
               </FormControl>
-              
+
               <FormMessage />
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="account_password"
@@ -141,13 +116,12 @@ export default function CreateAccountForm() {
               <FormControl>
                 <PasswordInput placeholder="" {...field} />
               </FormControl>
-              
+
               <FormMessage />
             </FormItem>
           )}
         />
-        
-        
+
         <FormField
           control={form.control}
           name="account_role"
@@ -161,12 +135,11 @@ export default function CreateAccountForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
+                  <SelectItem value="user">Utilisateur</SelectItem>
+                  <SelectItem value="admin">Admin</SelectItem>
                 </SelectContent>
               </Select>
-                
+
               <FormMessage />
             </FormItem>
           )}
@@ -174,5 +147,5 @@ export default function CreateAccountForm() {
         <Button type="submit">Envoyer</Button>
       </form>
     </Form>
-  )
+  );
 }

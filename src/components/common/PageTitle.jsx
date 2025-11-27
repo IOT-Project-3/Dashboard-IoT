@@ -6,7 +6,7 @@ export default function PageTitle({ children }) {
 
   useEffect(() => {
     setTitle(children);
-    
+
     // Reset title on unmount (optional, but good practice if we want a default)
     // But here we might just let the next page overwrite it.
     return () => setTitle("Mon Application");
