@@ -1,4 +1,5 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import {
   SidebarProvider,
   SidebarInset,
@@ -8,35 +9,8 @@ import { AppSidebar } from "@/components/common/AppSidebar.jsx";
 import { Separator } from "@/components/ui/separator";
 
 export default function DashboardLayout() {
-  let location = useLocation().pathname;
-  const correspondances = {
-    admin: {
-      // Routes /admin/
-      "liste-utilisateurs": "Liste des utilisateurs",
-      "creer-compte": "Création d'un compte",
-      permissions: "Gestion des permissions",
-    },
-    // Routes /compte/
-    compte: { base: "Votre compte", details: "Paramètres de votre compte" },
-    // Routes /
-    "zone-inondable": "Zone inondable",
-    "gestion-de-l-aire": "Gestion de l'aire",
-    dashboard: "Tout voir",
-    savon: "Paramètres des savons",
-  };
+  const [title, setTitle] = useState("Mon Application");
 
-  let tempLocation = location.split("/");
-  if (location.includes("compte")) {
-    if (!tempLocation[2]) {
-      tempLocation[2] = "base";
-    }
-  }
-
-  if (tempLocation.length > 2) {
-    location = correspondances[tempLocation[1]][tempLocation[2]];
-  } else {
-    location = correspondances[tempLocation[1]];
-  }
   return (
     <SidebarProvider>
       {/* La Sidebar se met directement dans le Provider */}
@@ -48,11 +22,11 @@ export default function DashboardLayout() {
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
-          <span className="font-semibold">{location}</span>
+          <h1 className="font-semibold text-lg">{title}</h1>
         </header>
 
         <main className="flex-1 p-6">
-          <Outlet />
+          <Outlet context={{ setTitle }} />
         </main>
       </SidebarInset>
     </SidebarProvider>

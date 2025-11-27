@@ -3,7 +3,7 @@ import AppCard from "@/components/common/AppCard.jsx";
 
 function CardsList({ cards }) {
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <>
       {cards.map((item, key) => (
         <AppCard
           key={key}
@@ -12,7 +12,7 @@ function CardsList({ cards }) {
           texte={item.texte}
         />
       ))}
-    </div>
+    </>
   );
 }
 

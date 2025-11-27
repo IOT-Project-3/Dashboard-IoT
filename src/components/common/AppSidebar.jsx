@@ -65,12 +65,10 @@ const user_dropdown = [
   {
     title: "Compte",
     url: "/compte/",
-    icon: Settings,
   },
   {
     title: "Paramètres du compte",
     url: "/compte/details",
-    icon: Settings,
   },
   {
     title: "Déconnexion",
@@ -81,8 +79,6 @@ const user_dropdown = [
 export function AppSidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-
-  console.log(user);
 
   function deconnexion() {
     logout();
